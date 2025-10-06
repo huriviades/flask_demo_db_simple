@@ -1,0 +1,9 @@
+#Lenvatar los servicios
+docker-compose up -d
+
+#Levantar y crear la database
+docker cp D_TimeZone_data.sql compose-demo_flask_db-1:/tmp/D_TimeZone_data.sql
+docker-compose exec demo_flask_db bash -c "export PGPASSWORD='PWD123'; psql -U usuario_prueba -d demo_db -f /tmp/D_TimeZone_data.sql"
+
+#Levantar la web
+

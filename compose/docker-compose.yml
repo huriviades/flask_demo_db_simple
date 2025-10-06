@@ -1,0 +1,40 @@
+version: "3.4"
+
+services:
+  demo_flask_compose:
+    restart: "no"
+    image: ubuntu/web:2
+    ports:
+      - "80:80"
+    environment:
+      - TZ=UTC
+    networks:
+      ADSL:
+        ipv4_address: 172.30.0.10
+    volumes:
+      - 'demo_flask_compose_data:/var/www/html'
+
+  demo_flask_db:
+    image: 'bitnamilegacy/postgresql:14.9.0'
+    ports:
+      - '5432:5432'
+    environment:
+      - TZ=UTC
+      - POSTGRESQL_DATABASE=demo_db
+      - POSTGRESQL_USERNAME=usuario_prueba
+      - POSTGRESQL_PASSWORD=PWD123
+    networks:
+      ADSL:
+        ipv4_address: 172.30.1.10
+    volumes:
+      - 'demo_db_compose_data:/bitnami/postgresql'
+
+networks:
+  ADSL:
+    external: true
+
+volumes:
+  demo_flask_compose_data:
+    driver: local
+  demo_db_compose_data:
+    driver: local
