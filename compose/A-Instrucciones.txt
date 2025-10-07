@@ -10,13 +10,13 @@ docker-compose exec demo_flask_db bash -c "export PGPASSWORD='PWD123'; psql -U u
 cd compose/
 docker-compose exec demo_flask_compose bash
 cd /var/www/html
-git clone --no-checkout https://github.com/huriviades/flask_demo_db_simple-.git
-cd flask_demo_db_simple-
+git clone --no-checkout https://github.com/huriviades/flask_demo_db_simple.git
+cd flask_demo_db_simple
 git sparse-checkout init --cone
-git sparse-checkout set flask_demo_db
+git sparse-checkout set demo_web
 git checkout main
-mv flask_demo_db/ ../
-cd ..
-rm -rf flask_demo_db_simple-
-cd flask_demo_db/
-source /opt/demo_web/workspace/envs/demo_web/bin/activate 
+mv demo_web/ ../
+cd .. && rm -rf flask_demo_db_simple
+cd demo_web/
+supervisorctl restart demo_web
+
