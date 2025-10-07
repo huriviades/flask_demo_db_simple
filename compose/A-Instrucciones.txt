@@ -1,4 +1,5 @@
 #Lenvatar los servicios
+cd compose/
 docker-compose up -d
 
 #Levantar y crear la database
@@ -6,4 +7,16 @@ docker cp D_TimeZone_data.sql compose-demo_flask_db-1:/tmp/D_TimeZone_data.sql
 docker-compose exec demo_flask_db bash -c "export PGPASSWORD='PWD123'; psql -U usuario_prueba -d demo_db -f /tmp/D_TimeZone_data.sql"
 
 #Levantar la web
-
+cd compose/
+docker-compose exec demo_flask_compose bash
+cd /var/www/html
+git clone --no-checkout https://github.com/huriviades/flask_demo_db_simple-.git
+cd flask_demo_db_simple-
+git sparse-checkout init --cone
+git sparse-checkout set flask_demo_db
+git checkout main
+mv flask_demo_db/ ../
+cd ..
+rm -rf flask_demo_db_simple-
+cd flask_demo_db/
+source /opt/demo_web/workspace/envs/demo_web/bin/activate 
